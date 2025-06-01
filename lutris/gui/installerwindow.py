@@ -385,7 +385,7 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
     def present_choose_installer_page(self):
         """Stage where we choose an install script."""
         self.set_status("")
-        self.set_title(_("Install %s") % self.installers[0].script["name"])
+        self.set_title(_("Install %s") % self.installers[0].data["name"])
         self.stack.present_page("choose_installer")
         self.display_cancel_button(extra_buttons=[self.cache_button])
 
@@ -399,7 +399,7 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
         try:
             installer = None
             for _installer in self.installers:
-                if _installer.script["version"] == installer_version:
+                if _installer.data["version"] == installer_version:
                     installer = _installer
             self.interpreter = interpreter.ScriptInterpreter(installer, self)
             self.interpreter.connect("runners-installed", self.on_runners_ready)
@@ -423,13 +423,13 @@ class InstallerWindow(ModelessDialog, DialogInstallUIDelegate, ScriptInterpreter
         """Auto-fixes some script aspects and checks for mandatory fields"""
         if not installers:
             raise ScriptingError(_("No installer available"))
-        for script in installers:
+        for installer in installers:
             for item in ["description", "notes"]:
-                script.script[item] = script.script.get(item) or ""
+                installer.data[item] = installer.data.get(item) or ""
             for item in ["name", "runner", "version"]:
-                if item not in script.script:
+                if item not in installer.data:
                     raise ScriptingError(_('Missing field "%s" in install script') % item)
-            for file_desc in script.script["script"].get("files", {}):
+            for file_desc in installer.data["script"].get("files", {}):
                 if len(file_desc) > 1:
                     raise ScriptingError(_('Improperly formatted file "%s"') % file_desc)
 

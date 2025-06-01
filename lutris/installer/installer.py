@@ -24,7 +24,7 @@ class LutrisInstaller:  # pylint: disable=too-many-instance-attributes
     def __init__(self, installer: Installer, interpreter, service, appid):
         self.interpreter = interpreter
         self.installer = installer
-        installer_script = installer.script
+        installer_script = installer.data
         self.is_update = False
 
         try:

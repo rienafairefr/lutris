@@ -13,7 +13,7 @@ class InstallerScriptBox(Gtk.VBox):
     def __init__(self, installer: Installer, parent=None, revealed=False):
         super().__init__()
         self.installer = installer
-        self.script = installer.script
+        self.script = installer.data
         self.parent = parent
         self.revealer = None
         self.set_margin_left(12)

@@ -17,7 +17,7 @@ AUTO_WIN32_EXE = AUTO_EXE_PREFIX + "WIN32_xXx_"
 
 @dc.dataclass
 class Installer(object):
-    script: dict
+    data: dict
     file: Optional[str] = None
 
 
@@ -45,4 +45,4 @@ def get_installers(game_slug=None, installer_file=None, revision=None) -> List[I
         scripts = [normalize_installer(i) for i in read_script(installer_file)]
     else:
         scripts = get_game_installers(game_slug=game_slug, revision=revision)
-    return [Installer(script=script, file=installer_file) for script in scripts]
+    return [Installer(data=script, file=installer_file) for script in scripts]
